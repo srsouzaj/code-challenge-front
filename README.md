@@ -6,13 +6,17 @@ Este repositório contém o ponto de partida para o seu desafio de desenvolvimen
 
 Seu objetivo é desenvolver um formulário de cadastro de usuário dividido em 3 etapas, utilizando Next.js, TypeScript, e Zustand para gerenciamento de estado. O formulário deverá implementar validações de frontend com máscaras de input e, na etapa final, enviar os dados para a API de Registro de Usuários.
 
+
 ## Requisitos Fundamentais
 
 ### Estrutura da Aplicação:
 
-- Crie uma aplicação Next.js com uma página principal (/) que hospede o formulário multi-step.
+- Crie uma aplicação Next.js com:
+  - Uma página principal (/) que hospede o formulário multi-step
+  - [Opcional] Uma página de gerenciamento de usuários (/users) para listagem, edição e exclusão
 - Todo o código deve ser escrito em TypeScript.
 - Adote Tailwind CSS e/ou Chakra UI para a estilização dos componentes, garantindo responsividade e acessibilidade.
+
 
 ### Gerenciamento de Estado com Zustand:
 
@@ -63,6 +67,38 @@ Crie uma store Zustand dedicada para gerenciar o estado global do formulário de
   - **Campos Esperados (JSON Body)**: `full_name`, `email`, `phone`, `zip_code`, `address`, `number`, `city`, `state`, `terms_accepted`.
   - **Validações de Backend (complementares)**: Todos os campos obrigatórios; email válido e único; phone e zip_code com formato brasileiro; state sigla brasileira válida; terms_accepted deve ser true.
   - **Códigos de Resposta Relevantes**: 201 Created (sucesso), 400 Bad Request (erros de validação), 409 Conflict (email já existe), 500 Internal Server Error (erro interno).
+
+
+## Recursos Opcionais (Diferenciais)
+
+### Tela de Gerenciamento de Usuários
+
+Crie uma rota `/users` que implemente:
+
+1. **Listagem de Usuários**:
+   - Tabela com paginação
+   - Busca/filtro por nome ou email
+   - Ordenação por colunas
+
+2. **Edição de Usuário**:
+   - Modal ou nova página para edição
+   - Reutilização do formulário de cadastro (com preenchimento dos dados)
+   - Integração com endpoint PUT da API
+
+3. **Exclusão de Usuário**:
+   - Confirmação antes da exclusão
+   - Integração com endpoint DELETE da API
+   - Feedback visual após operação
+
+4. **Visualização de Detalhes**:
+   - Modal com todos os dados do usuário
+   - Histórico de alterações (se API suportar)
+
+### Requisitos Técnicos Opcionais:
+- Cache de dados com Zustand
+- Atualização em tempo real da lista após operações
+- Animações de transição entre estados
+- Exportação de dados (CSV/JSON)
 
 ## Como Começar
 
