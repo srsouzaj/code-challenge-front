@@ -28,10 +28,8 @@ export const FormProvider: React.FC<React.PropsWithChildren> = ({
   }, [step]);
 
   const handleNext = useCallback(() => {
-    if (step > totalSteps) {
-      setStep(step + 1);
-    }
-  }, [step]);
+    setStep((prevStep) => prevStep + 1);
+  }, []);
 
   const value: FormContextValue = useMemo(
     () => ({ handleBack, step, totalSteps, handleNext }),
@@ -41,7 +39,7 @@ export const FormProvider: React.FC<React.PropsWithChildren> = ({
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>;
 };
 
-export const useFormContext = (): FormContextValue => {
+export const useStepFormContext = (): FormContextValue => {
   const context = useContext(FormContext);
   if (!context) {
     throw new Error("Erro");

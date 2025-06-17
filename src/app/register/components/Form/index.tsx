@@ -1,5 +1,4 @@
-// import { Button } from "@/components/ui/button";
-import { memo, useState } from "react";
+import { memo } from "react";
 import Indicator from "./Indicator";
 import {
   Card,
@@ -8,34 +7,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-// import { useForm } from "react-hook-form";
-// import { toast } from "sonner";
-import ConfirmForm from "./Steps/ConfirmForm";
+import { useStepFormContext } from "../../context/form.context";
+import { FormStep, stepLabels } from "./Steps/utils/descriptions";
+import FormSteps from "./Steps/AnimatedStep/utils/FormStep";
 
 const FormContainer = () => {
-  const [step] = useState<number>(0);
-  const totalSteps = 3;
-
-  // const form = useForm();
-
-  // const { handleSubmit, reset } = form;
-  // const onSubmit = async (formData: unknown) => {
-  //   if (step < totalSteps - 1) {
-  //     setStep(step + 1);
-  //   } else {
-  //     console.log(formData);
-  //     setStep(0);
-  //     reset();
-
-  //     toast.success("Form successfully submitted");
-  //   }
-  // };
-
-  // const handleBack = () => {
-  //   if (step > 0) {
-  //     setStep(step - 1);
-  //   }
-  // };
+  const { step, totalSteps } = useStepFormContext();
 
   return (
     <div className="space-y-4">
@@ -45,10 +22,12 @@ const FormContainer = () => {
           <CardTitle className="text-2xl text-primary">
             Criação de usuários
           </CardTitle>
-          <CardDescription>Dados pessoais</CardDescription>
+          <CardDescription>
+            {stepLabels[step as keyof typeof stepLabels]}
+          </CardDescription>
         </CardHeader>
-        <CardContent>
-          <ConfirmForm />
+        <CardContent className=" h-full">
+          <FormSteps step={step as FormStep} />
         </CardContent>
       </Card>
     </div>
