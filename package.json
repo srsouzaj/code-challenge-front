@@ -10,7 +10,7 @@
         "test": "echo \"Testes não configurados.\" && exit 0",
         "commitlint": "commitlint --edit",
         "prepare": "husky",
-        "commit": "cz"
+        "commit": "git add . && cz"
     },
     "config": {
         "commitizen": {
