@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 // import { useForm } from "react-hook-form";
 // import { toast } from "sonner";
-import AddressForm from "./Steps/AddressForm";
+import ConfirmForm from "./Steps/ConfirmForm";
 
 const FormContainer = () => {
   const [step] = useState<number>(0);
@@ -48,7 +48,7 @@ const FormContainer = () => {
           <CardDescription>Dados pessoais</CardDescription>
         </CardHeader>
         <CardContent>
-          <AddressForm />
+          <ConfirmForm />
         </CardContent>
       </Card>
     </div>
