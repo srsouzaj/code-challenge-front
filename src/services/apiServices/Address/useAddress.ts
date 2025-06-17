@@ -4,11 +4,13 @@ import { OutAddress } from "./Models";
 import IAddressApiService from "./Types";
 
 export class useAddress implements IAddressApiService {
-  async consultarCEP(cep: string): Promise<AxiosResponse<OutAddress>> {
+  async consultarCEP(cep: string): Promise<OutAddress> {
     try {
-      return await axios.get<void, AxiosResponse<OutAddress>>(
+      const data = await axios.get<void, AxiosResponse<OutAddress>>(
         apiRoutes.address.url(cep)
       );
+
+      return data.data || ({} as OutAddress);
     } catch (e) {
       return Promise.reject(e);
     }

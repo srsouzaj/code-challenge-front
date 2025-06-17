@@ -33,5 +33,17 @@ export const useFormatter = () => {
     return formatted;
   }, []);
 
-  return { formatPhone, formatName, formatEmail };
+  const formatCEP = useCallback((value: string) => {
+    let digitsOnly = value.replace(/\D/g, "");
+
+    digitsOnly = digitsOnly.slice(0, 8);
+
+    if (digitsOnly.length > 5) {
+      return digitsOnly.slice(0, 5) + "-" + digitsOnly.slice(5);
+    }
+
+    return digitsOnly;
+  }, []);
+
+  return { formatPhone, formatName, formatEmail, formatCEP };
 };

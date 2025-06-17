@@ -33,21 +33,18 @@ const PersonalForm = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-8"
-      noValidate
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">
       <fieldset className="flex flex-col gap-6" aria-label="Dados Pessoais">
         <div className="flex flex-col gap-1">
           <Label htmlFor="name">Nome Completo</Label>
           <Input
             id="name"
             placeholder="Digite seu nome"
-            {...register("name")}
-            onChange={(e) => {
-              e.target.value = formatName(e.target.value);
-            }}
+            {...register("name", {
+              onChange: (e) => {
+                e.target.value = formatName(e.target.value);
+              },
+            })}
             autoComplete="off"
           />
           <ErrorMessage message={errors.name?.message} />
