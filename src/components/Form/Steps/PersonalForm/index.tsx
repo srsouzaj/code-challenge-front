@@ -1,3 +1,4 @@
+"use client";
 import { memo, useEffect, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,13 +11,13 @@ import { OutPersonalFormTypes } from "./utils/personalForm.interface";
 import outPersonalFormSchema from "./utils/personalForm.schema";
 import { useFormatter } from "@/hooks/useFormatter";
 import ButtonNavigation from "../buttonNavigation";
-import { useStepFormContext } from "@/app/register/context/form.context";
 import useFormatterPersonalForm from "./hooks/useFormatterPersonalForm";
+import { useFormStore } from "@/app/register/stores/form.store";
 
 const PersonalForm = () => {
   const { formatName, formatPhone, formatEmail } = useFormatter();
   const { handleBack, handleNext, handlePersonalData, personalData } =
-    useStepFormContext();
+    useFormStore();
   const { transformInitialValues } = useFormatterPersonalForm();
 
   const defaultValues: OutPersonalFormTypes = useMemo(

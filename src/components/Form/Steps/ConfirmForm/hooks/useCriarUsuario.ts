@@ -1,5 +1,5 @@
 "use client";
-import { useStepFormContext } from "@/app/register/context/form.context";
+import { useFormStore } from "@/app/register/stores/form.store";
 import Services from "@/services";
 import { InUsers } from "@/services/apiServices/Users/Models";
 import { useMutation } from "@tanstack/react-query";
@@ -7,7 +7,7 @@ import { toast } from "sonner";
 
 const useCriarUsuario = () => {
   const { users: services } = Services();
-  const { handleResetForm } = useStepFormContext();
+  const { handleResetForm } = useFormStore();
 
   const {
     mutate: criarUsuarios,
@@ -17,7 +17,6 @@ const useCriarUsuario = () => {
     mutationFn: (users: InUsers) => services.criarUsuarios(users),
     onSuccess: () => {
       handleResetForm();
-      //   queryClient.invalidateQueries({ queryKey: ["consultar-documentos"] });
       toast("Um novo usuário foi adicionado", {
         description: "Usuário adicionado com sucesso",
       });

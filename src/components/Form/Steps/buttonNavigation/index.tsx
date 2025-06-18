@@ -1,4 +1,4 @@
-import { useStepFormContext } from "@/app/register/context/form.context";
+import { useFormStore } from "@/app/register/stores/form.store";
 import { Button } from "@/components/ui/button";
 import { memo, ReactNode } from "react";
 import { useFormContext } from "react-hook-form";
@@ -17,14 +17,14 @@ const ButtonNavigation: React.FC<ButtonNavigationProps> = ({
   children,
   isLoading = false,
 }) => {
-  const { step } = useStepFormContext();
+  const { step } = useFormStore();
   const {
     handleSubmit,
     formState: { isValid, isSubmitting },
   } = useFormContext();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       {children}
       <div className="flex justify-between">
         <Button

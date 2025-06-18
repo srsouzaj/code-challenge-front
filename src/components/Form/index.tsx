@@ -1,4 +1,6 @@
-import { memo } from "react";
+"use client";
+
+import { memo, useEffect } from "react";
 import Indicator from "./Indicator";
 import {
   Card,
@@ -7,35 +9,38 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  FormProvider,
-  useStepFormContext,
-} from "../../app/register/context/form.context";
 import { FormStep, stepLabels } from "./Steps/utils/descriptions";
 import FormSteps from "./Steps/AnimatedStep/utils/FormStep";
+import { useFormStore } from "@/app/register/stores/form.store";
+import { OutUsers } from "@/services/apiServices/Users/Models";
 
-const FormContainer = () => {
-  const { step, totalSteps } = useStepFormContext();
+const FormContainer = ({ user }: { user?: OutUsers }) => {
+  const { step, totalSteps, handleGetInfoForEdit, isEdit } = useFormStore();
+
+  useEffect(() => {
+    if (user) {
+      handleGetInfoForEdit(user);
+    }
+  }, [user]);
 
   return (
-    <FormProvider>
-      <div className="space-y-4">
-        <Indicator totalSteps={totalSteps} step={step} />
-        <Card className="shadow-sm">
-          <CardHeader>
-            <CardTitle className="text-2xl text-primary">
-              Etapa {step + 1} de {totalSteps} - Criação de usuários
-            </CardTitle>
-            <CardDescription>
-              {stepLabels[step as keyof typeof stepLabels]}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className=" h-full">
-            <FormSteps step={step as FormStep} />
-          </CardContent>
-        </Card>
-      </div>
-    </FormProvider>
+    <div className="space-y-4">
+      <Indicator totalSteps={totalSteps} step={step} />
+      <Card className="shadow-sm">
+        <CardHeader>
+          <CardTitle className="text-2xl text-primary">
+            Etapa {step + 1} de {totalSteps} - {isEdit ? "Edição" : "Criação"}
+            de usuário(s)
+          </CardTitle>
+          <CardDescription>
+            {stepLabels[step as keyof typeof stepLabels]}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className=" h-full">
+          <FormSteps step={step as FormStep} />
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 

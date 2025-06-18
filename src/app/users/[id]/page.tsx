@@ -1,5 +1,3 @@
-"use client";
-
 import FormContainer from "@/components/Form";
 import Services from "@/services";
 
@@ -14,7 +12,7 @@ export default async function EditPage({ params }: { params: { id: string } }) {
   return (
     <main className="container">
       <h1 className="text-xl font-bold mb-4">Usuário:</h1>
-      <FormContainer />
+      <FormContainer user={user} />
     </main>
   );
 }

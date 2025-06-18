@@ -7,22 +7,23 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import outConfirmFormSchema from "./utils/confirmForm.schema";
 import ErrorMessage from "@/components/ErrorMessage";
 import ButtonNavigation from "../buttonNavigation";
-import { useStepFormContext } from "@/app/register/context/form.context";
 import { Separator } from "@/components/ui/separator";
 import useCriarUsuario from "./hooks/useCriarUsuario";
 import { InUsers } from "@/services/apiServices/Users/Models";
+import { useFormStore } from "@/app/register/stores/form.store";
+import useAtualizarUsuario from "./hooks/useAtualizarUsuario";
 
 const ConfirmForm = () => {
-  const { handleBack, personalData, addressData } = useStepFormContext();
-  const { criarUsuarios, loadingCriarUsuarios, isSuccess } = useCriarUsuario();
+  const { handleBack, personalData, addressData, isEdit, userId } =
+    useFormStore();
+  const { criarUsuarios, loadingCriarUsuarios } = useCriarUsuario();
+  const { atualizarUsuario, loadingAtualizarUsuarios } = useAtualizarUsuario();
   const method = useForm<OutConfirmFormTypes>({
     resolver: zodResolver(outConfirmFormSchema),
     defaultValues: {
       acceptTerms: false,
     },
   });
-
-  console.log(isSuccess);
 
   const {
     control,
@@ -31,37 +32,36 @@ const ConfirmForm = () => {
 
   const onSubmit = useCallback(
     ({ acceptTerms }: OutConfirmFormTypes) => {
-      const data: InUsers = {
-        full_name: personalData.full_name,
-        email: personalData.email,
-        phone: personalData.phone,
-        zip_code: addressData.cep,
-        address: addressData.address,
-        number: addressData.number,
-        city: addressData.city,
-        state: addressData.state,
+      const { full_name, email, phone } = personalData;
+
+      const { cep, address, number, city, state } = addressData;
+
+      const userPayload: InUsers = {
+        full_name,
+        email,
+        phone,
+        zip_code: cep,
+        address,
+        number,
+        city,
+        state,
         terms_accepted: acceptTerms,
       };
-      criarUsuarios(data);
+
+      if (isEdit && userId) {
+        atualizarUsuario({ userId, users: userPayload });
+      } else {
+        criarUsuarios(userPayload);
+      }
     },
-    [
-      addressData.address,
-      addressData.cep,
-      addressData.city,
-      addressData.number,
-      addressData.state,
-      criarUsuarios,
-      personalData.email,
-      personalData.full_name,
-      personalData.phone,
-    ]
+    [personalData, addressData, isEdit, userId, atualizarUsuario, criarUsuarios]
   );
 
   return (
     <FormProvider {...method}>
       <ButtonNavigation
         handleBack={handleBack}
-        isLoading={loadingCriarUsuarios}
+        isLoading={isEdit ? loadingAtualizarUsuarios : loadingCriarUsuarios}
         onSubmit={onSubmit}
       >
         <aside className="flex flex-col gap-1">
