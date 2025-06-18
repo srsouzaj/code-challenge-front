@@ -9,7 +9,7 @@ const useConsultarUsuarios = () => {
   const { users: services } = useServices();
 
   const { data, isLoading: loadingUsers } = useQuery({
-    queryKey: ["consultar-documentos"],
+    queryKey: ["consultar-usuario"],
     queryFn: () => services.consultarUsuarios(),
   });
 

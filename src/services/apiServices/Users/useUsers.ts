@@ -21,7 +21,7 @@ export class useUsers implements IUsersApiService {
     }
   }
 
-  async consultarUsuarioById(userId: string): Promise<OutUsers> {
+  async consultarUsuarioById(userId: number): Promise<OutUsers> {
     try {
       const { data } = await api.get(apiRoutes.users.byId.url(userId));
       return data;
@@ -30,7 +30,7 @@ export class useUsers implements IUsersApiService {
     }
   }
 
-  async atualizarUsuarios(userId: string, user: InUsers): Promise<void> {
+  async atualizarUsuarios(userId: number, user: InUsers): Promise<void> {
     try {
       await api.put(apiRoutes.users.byId.url(userId), user);
     } catch (e) {
@@ -38,7 +38,7 @@ export class useUsers implements IUsersApiService {
     }
   }
 
-  async excluirUsuarios(userId: string): Promise<void> {
+  async excluirUsuarios(userId: number): Promise<void> {
     try {
       await api.delete(apiRoutes.users.byId.url(userId));
     } catch (e) {
