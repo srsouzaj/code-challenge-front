@@ -1,7 +1,7 @@
 import * as z from "zod";
 
 const outPersonalFormSchema = z.object({
-  name: z.string().min(1, "Nome é obrigatório"),
+  full_name: z.string().min(1, "Nome é obrigatório"),
   email: z
     .string()
     .min(1, "E-mail é obrigatório")

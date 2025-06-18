@@ -18,7 +18,7 @@ const ButtonNavigation: React.FC<ButtonNavigationProps> = ({
   const { step } = useStepFormContext();
   const {
     handleSubmit,
-    formState: { isValid },
+    formState: { isValid, isSubmitting },
   } = useFormContext();
 
   return (
@@ -38,8 +38,9 @@ const ButtonNavigation: React.FC<ButtonNavigationProps> = ({
         <Button
           type="submit"
           size="sm"
-          disabled={!isValid}
+          disabled={!isValid || isSubmitting}
           className="font-medium"
+          isLoading={isSubmitting}
         >
           {step === (2 as number) ? "Finalizar" : "Próximo"}
         </Button>

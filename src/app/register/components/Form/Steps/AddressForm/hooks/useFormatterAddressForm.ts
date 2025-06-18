@@ -3,7 +3,7 @@ import { OutAddressFormTypes } from "../utils/address.interface";
 import { validStates } from "../utils/state";
 import { useMemo } from "react";
 
-const useFormatterForm = () => {
+const useFormatterAddressForm = () => {
   const changeValuesforNewCEP = ({
     add,
   }: {
@@ -34,4 +34,4 @@ const useFormatterForm = () => {
   return { defaultValues, changeValuesforNewCEP };
 };
 
-export default useFormatterForm;
+export default useFormatterAddressForm;

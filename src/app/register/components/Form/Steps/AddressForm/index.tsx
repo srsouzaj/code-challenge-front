@@ -10,15 +10,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import outAddressFormSchema from "./utils/address.schema";
 import Select from "@/components/Select";
 import statesOptions from "./utils/state";
-import useConsultarCEP from "./hook/useConsultarCep";
-import useFormatterForm from "./hook/useFormatterForm";
+import useConsultarCEP from "./hooks/useConsultarCep";
+import useFormatterAddressForm from "./hooks/useFormatterAddressForm";
 import { useFormatter } from "@/hooks/useFormatter";
 import ButtonNavigation from "../buttonNavigation";
 import { useStepFormContext } from "@/app/register/context/form.context";
 
 const AddressForm = () => {
-  const { changeValuesforNewCEP, defaultValues } = useFormatterForm();
-  const { handleNext, handleBack } = useStepFormContext();
+  const { changeValuesforNewCEP, defaultValues } = useFormatterAddressForm();
+  const { handleNext, handleBack, handleAddressData } = useStepFormContext();
   const { formatCEP } = useFormatter();
 
   const method = useForm<OutAddressFormTypes>({
@@ -44,7 +44,7 @@ const AddressForm = () => {
   }, [address, reset]);
 
   const onSubmitAddress = (data: OutAddressFormTypes) => {
-    console.log(data);
+    handleAddressData(data);
     handleNext();
   };
 

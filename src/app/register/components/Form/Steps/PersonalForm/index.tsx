@@ -11,18 +11,16 @@ import outPersonalFormSchema from "./utils/personalForm.schema";
 import { useFormatter } from "@/hooks/useFormatter";
 import ButtonNavigation from "../buttonNavigation";
 import { useStepFormContext } from "@/app/register/context/form.context";
+import useFormatterPersonalForm from "./hooks/useFormatterPersonalForm";
 
 const PersonalForm = () => {
   const { formatName, formatPhone, formatEmail } = useFormatter();
-  const { handleBack, handleNext } = useStepFormContext();
+  const { handleBack, handleNext, handlePersonalData } = useStepFormContext();
+  const { defaultValues } = useFormatterPersonalForm();
 
   const method = useForm<OutPersonalFormTypes>({
     resolver: zodResolver(outPersonalFormSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-    },
+    defaultValues,
   });
 
   const {
@@ -31,7 +29,7 @@ const PersonalForm = () => {
   } = method;
 
   const onSubmit = (data: OutPersonalFormTypes) => {
-    console.log(data);
+    handlePersonalData(data);
     handleNext();
   };
 
@@ -40,18 +38,18 @@ const PersonalForm = () => {
       <ButtonNavigation handleBack={handleBack} onSubmit={onSubmit}>
         <fieldset className="flex flex-col gap-6" aria-label="Dados Pessoais">
           <div className="flex flex-col gap-1">
-            <Label htmlFor="name">Nome Completo</Label>
+            <Label htmlFor="full_name">Nome Completo</Label>
             <Input
-              id="name"
+              id="full_name"
               placeholder="Digite seu nome"
-              {...register("name", {
+              {...register("full_name", {
                 onChange: (e) => {
                   e.target.value = formatName(e.target.value);
                 },
               })}
               autoComplete="off"
             />
-            <ErrorMessage message={errors.name?.message} />
+            <ErrorMessage message={errors.full_name?.message} />
           </div>
 
           <div className="flex flex-col gap-1">
@@ -75,6 +73,7 @@ const PersonalForm = () => {
             <Label htmlFor="phone">Telefone</Label>
             <Input
               id="phone"
+              type="tel"
               placeholder="Digite seu telefone"
               {...register("phone", {
                 onChange: (e) => {

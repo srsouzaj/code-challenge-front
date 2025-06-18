@@ -5,12 +5,18 @@ import React, {
   useMemo,
   useState,
 } from "react";
+import { OutPersonalFormTypes } from "../components/Form/Steps/PersonalForm/utils/personalForm.interface";
+import { OutAddressFormTypes } from "../components/Form/Steps/AddressForm/utils/address.interface";
 
 interface FormContextValue {
   step: number;
   totalSteps: number;
   handleBack: () => void;
   handleNext: () => void;
+  handlePersonalData: (value: OutPersonalFormTypes) => void;
+  handleAddressData: (value: OutAddressFormTypes) => void;
+  personalData: OutPersonalFormTypes;
+  addressData: OutAddressFormTypes;
 }
 
 const FormContext = createContext<FormContextValue>({} as FormContextValue);
@@ -20,6 +26,12 @@ export const FormProvider: React.FC<React.PropsWithChildren> = ({
 }) => {
   const [step, setStep] = useState<number>(0);
   const totalSteps = 3;
+  const [personalData, setPersonalData] = useState<OutPersonalFormTypes>(
+    {} as OutPersonalFormTypes
+  );
+  const [addressData, setAddressData] = useState<OutAddressFormTypes>(
+    {} as OutAddressFormTypes
+  );
 
   const handleBack = useCallback(() => {
     if (step > 0) {
@@ -27,13 +39,39 @@ export const FormProvider: React.FC<React.PropsWithChildren> = ({
     }
   }, [step]);
 
+  const handlePersonalData = useCallback((value: OutPersonalFormTypes) => {
+    setPersonalData(value);
+  }, []);
+
+  const handleAddressData = useCallback((value: OutAddressFormTypes) => {
+    setAddressData(value);
+  }, []);
+
   const handleNext = useCallback(() => {
     setStep((prevStep) => prevStep + 1);
   }, []);
 
   const value: FormContextValue = useMemo(
-    () => ({ handleBack, step, totalSteps, handleNext }),
-    [handleBack, step, totalSteps, handleNext]
+    () => ({
+      handleBack,
+      step,
+      totalSteps,
+      handleNext,
+      addressData,
+      handleAddressData,
+      handlePersonalData,
+      personalData,
+    }),
+    [
+      handleBack,
+      step,
+      totalSteps,
+      handleNext,
+      addressData,
+      handleAddressData,
+      handlePersonalData,
+      personalData,
+    ]
   );
 
   return <FormContext.Provider value={value}>{children}</FormContext.Provider>;
