@@ -1,15 +1,14 @@
 "use client";
 
-import FormContainer from "@/app/register/components/Form";
+import FormContainer from "@/components/Form";
+import { FormProvider } from "./register/context/form.context";
 
 export default function Home() {
-  // const form = useForm();
-
-  // const { handleSubmit, control, reset } = form;
-
   return (
     <main className="container">
-      <FormContainer />
+      <FormProvider>
+        <FormContainer />
+      </FormProvider>
     </main>
   );
 }

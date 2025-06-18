@@ -13,16 +13,16 @@ import useConsultarCEP from "./hooks/useConsultarCep";
 import useFormatterAddressForm from "./hooks/useFormatterAddressForm";
 import { useFormatter } from "@/hooks/useFormatter";
 import ButtonNavigation from "../buttonNavigation";
-import { useStepFormContext } from "@/app/register/context/form.context";
 import { toast } from "sonner";
 import outAddressFormSchema from "./utils/address.schema";
+import { useFormStore } from "@/app/register/stores/form.store";
 
 const AddressForm = () => {
   const { changeValuesforNewCEP, transformInitialValues } =
     useFormatterAddressForm();
 
   const { handleNext, handleBack, handleAddressData, addressData } =
-    useStepFormContext();
+    useFormStore();
   const { formatCEP } = useFormatter();
   const defaultValues: OutAddressFormTypes = useMemo(
     () => transformInitialValues(addressData),

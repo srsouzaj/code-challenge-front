@@ -1,29 +1,24 @@
 import Link from "next/link";
 
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar";
-import { Calendar1, CircleDollarSign, Contact, Home } from "lucide-react";
+import { UserRoundPlus, Contact, Home } from "lucide-react";
 
 const Menu = () => {
   const items = [
     {
       title: "Página Inicial",
-      url: "#",
+      url: "/",
       icon: Home,
     },
     {
-      title: "Clientes",
-      url: "#",
+      title: "Usuários",
+      url: "/users",
       icon: Contact,
     },
     {
-      title: "Agenda",
-      url: "#",
-      icon: Calendar1,
-    },
-    {
-      title: "Financeiro",
-      url: "#",
-      icon: CircleDollarSign,
+      title: "Cadastrar novo usuário",
+      url: "/",
+      icon: UserRoundPlus,
     },
   ];
   return (

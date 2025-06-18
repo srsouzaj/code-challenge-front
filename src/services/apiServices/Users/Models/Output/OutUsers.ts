@@ -9,6 +9,6 @@ export interface OutUsers {
   city: string;
   state: string;
   terms_accepted: boolean;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 }

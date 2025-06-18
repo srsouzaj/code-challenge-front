@@ -5,8 +5,8 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { OutPersonalFormTypes } from "../components/Form/Steps/PersonalForm/utils/personalForm.interface";
-import { OutAddressFormTypes } from "../components/Form/Steps/AddressForm/utils/address.interface";
+import { OutPersonalFormTypes } from "../../../components/Form/Steps/PersonalForm/utils/personalForm.interface";
+import { OutAddressFormTypes } from "../../../components/Form/Steps/AddressForm/utils/address.interface";
 
 interface FormContextValue {
   step: number;

@@ -6,7 +6,7 @@ import { Slot } from "@radix-ui/react-slot";
 import {
   Controller,
   FormProvider,
-  useStepFormContext,
+  useFormContext,
   useFormState,
   type ControllerProps,
   type FieldPath,
@@ -45,7 +45,7 @@ const FormField = <
 const useFormField = () => {
   const fieldContext = React.useContext(FormFieldContext);
   const itemContext = React.useContext(FormItemContext);
-  const { getFieldState } = useStepFormContext();
+  const { getFieldState } = useFormContext();
   const formState = useFormState({ name: fieldContext.name });
   const fieldState = getFieldState(fieldContext.name, formState);
 
