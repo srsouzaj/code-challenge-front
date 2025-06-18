@@ -16,6 +16,7 @@ import ActionsTable from "./components/ActionsTable";
 import Pagination from "./components/Pagination";
 import FilterInput from "./components/FilterInput";
 import ExportForDownload from "./components/ExportForDownload";
+import ModalUsers from "../ModalUsers";
 
 const DataTable = () => {
   const { currentUsers } = useUsersContext();
@@ -43,7 +44,9 @@ const DataTable = () => {
             {currentUsers.length > 0 ? (
               currentUsers.map((user) => (
                 <TableRow key={user.id}>
-                  <TableCell>{user.full_name}</TableCell>
+                  <TableCell>
+                    <ModalUsers user={user} />
+                  </TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{user.phone}</TableCell>
                   <TableCell>{user.state}</TableCell>

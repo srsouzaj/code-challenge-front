@@ -37,7 +37,12 @@ export const UsersProvider = ({ children }: { children: React.ReactNode }) => {
   const itemsPerPage = 5;
 
   useEffect(() => {
-    setFilteredUsers(users);
+    setFilteredUsers((prev) => {
+      const sameLength = prev.length === users.length;
+      const sameContent =
+        sameLength && prev.every((u, i) => u.id === users[i].id);
+      return sameContent ? prev : users;
+    });
   }, [users]);
 
   const totalPages = Math.max(

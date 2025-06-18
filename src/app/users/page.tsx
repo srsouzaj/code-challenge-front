@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus } from "lucide-react";
+import { Info, Plus } from "lucide-react";
 import DataTable from "./componentes/DataTable";
 import { UsersProvider } from "./context/users.context";
 import { Button } from "@/components/ui/button";
@@ -12,9 +12,9 @@ export default function UsersPage() {
         <section className="flex justify-between">
           <span className="flex flex-col gap-1">
             <h1 className="font-semibold text-2xl text-primary">Usuários</h1>
-            <p className="text-xs font-thin">
-              Para verificar maiores informações sobre os usuário, clique no
-              nome
+            <p className="text-xs flex gap-2 font-thin">
+              <Info width={16} height={16} />
+              Para obter maiores informações sobre os usuário, clique no nome
             </p>
           </span>
           <Link href={"/"}>
