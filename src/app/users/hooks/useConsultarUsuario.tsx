@@ -1,0 +1,22 @@
+"use client";
+
+import useServices from "@/services";
+import { OutUsers } from "@/services/apiServices/Users/Models";
+
+import { useQuery } from "@tanstack/react-query";
+
+const useConsultarUsuarios = () => {
+  const { users: services } = useServices();
+
+  const { data, isLoading: loadingUsers } = useQuery({
+    queryKey: ["consultar-documentos"],
+    queryFn: () => services.consultarUsuarios(),
+  });
+
+  return {
+    users: data ?? ([] as OutUsers[]),
+    loadingUsers,
+  };
+};
+
+export default useConsultarUsuarios;

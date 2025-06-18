@@ -1,60 +1,46 @@
-import { AxiosResponse } from "axios";
 import api from "../../api";
 import apiRoutes from "../../../../utils/apiRoutes";
 import IUsersApiService from "./Types";
 import { InUsers, OutUsers } from "./Models";
 
 export class useUsers implements IUsersApiService {
-  async criarUsuarios(user: InUsers): Promise<AxiosResponse<void>> {
+  async criarUsuarios(user: InUsers): Promise<void> {
     try {
-      return await api.post<InUsers, AxiosResponse<void>>(
-        apiRoutes.users.url(),
-        user
-      );
+      await api.post(apiRoutes.users.url(), user);
     } catch (e) {
       return Promise.reject(e);
     }
   }
 
-  async consultarUsuarios(): Promise<AxiosResponse<OutUsers[]>> {
+  async consultarUsuarios(): Promise<OutUsers[]> {
     try {
-      return await api.get<void, AxiosResponse<OutUsers[]>>(
-        apiRoutes.users.url()
-      );
+      const { data } = await api.get(apiRoutes.users.url());
+      return data;
     } catch (e) {
       return Promise.reject(e);
     }
   }
 
-  async consultarUsuarioById(userId: string): Promise<AxiosResponse<OutUsers>> {
+  async consultarUsuarioById(userId: string): Promise<OutUsers> {
     try {
-      return await api.get<void, AxiosResponse<OutUsers>>(
-        apiRoutes.users.byId.url(userId)
-      );
+      const { data } = await api.get(apiRoutes.users.byId.url(userId));
+      return data;
     } catch (e) {
       return Promise.reject(e);
     }
   }
 
-  async atualizarUsuarios(
-    userId: string,
-    user: InUsers
-  ): Promise<AxiosResponse<void>> {
+  async atualizarUsuarios(userId: string, user: InUsers): Promise<void> {
     try {
-      return await api.put<InUsers, AxiosResponse<void>>(
-        apiRoutes.users.byId.url(userId),
-        user
-      );
+      await api.put(apiRoutes.users.byId.url(userId), user);
     } catch (e) {
       return Promise.reject(e);
     }
   }
 
-  async excluirUsuarios(userId: string): Promise<AxiosResponse<void>> {
+  async excluirUsuarios(userId: string): Promise<void> {
     try {
-      return await api.delete<void, AxiosResponse<void>>(
-        apiRoutes.users.byId.url(userId)
-      );
+      await api.delete(apiRoutes.users.byId.url(userId));
     } catch (e) {
       return Promise.reject(e);
     }
