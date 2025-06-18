@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { OutUsers } from "@/services/apiServices/Users/Models";
 import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
 
 const ModalUsers = ({ user }: { user: OutUsers }) => {
   return (
@@ -61,7 +62,9 @@ const ModalUsers = ({ user }: { user: OutUsers }) => {
           </section>
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="outline">Editar</Button>
+              <Button variant="outline">
+                <Link href={`/users/${user.id}`}> Editar </Link>
+              </Button>
             </DialogClose>
             <Button type="submit">Ok</Button>
           </DialogFooter>

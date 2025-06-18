@@ -8,11 +8,11 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { useUsersContext } from "@/app/users/context/users.context";
+import { useUsersStore } from "@/app/users/store/user.store";
 
 const ExportForDownload = () => {
   const { exportCSV, exportJSON } = useExportData();
-  const { users } = useUsersContext();
+  const { users } = useUsersStore();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

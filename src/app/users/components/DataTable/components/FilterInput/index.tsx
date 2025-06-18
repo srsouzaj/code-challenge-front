@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { memo } from "react";
-import { useUsersContext } from "@/app/users/context/users.context";
 import { SlidersHorizontal } from "lucide-react";
+import { useUsersStore } from "@/app/users/store/user.store";
 
 const FilterInput = () => {
   const { updateSearchTerm, searchTerm, handleFilter, handleResetFilter } =
-    useUsersContext();
+    useUsersStore();
   return (
     <>
       <Input

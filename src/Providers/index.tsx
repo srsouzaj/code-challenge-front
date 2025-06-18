@@ -1,6 +1,5 @@
 "use client";
 
-import { FormProvider } from "@/app/register/context/form.context";
 import SidebarItemsMenu from "@/components/Sidebar/app-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -13,7 +12,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
     <QueryClientProvider client={queryClient}>
       <SidebarProvider>
         <SidebarItemsMenu />
-        <FormProvider>{children}</FormProvider>
+        {children}
       </SidebarProvider>
       <Toaster />
     </QueryClientProvider>

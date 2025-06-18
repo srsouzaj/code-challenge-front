@@ -1,12 +1,12 @@
 "use client";
 import { useStepFormContext } from "@/app/register/context/form.context";
-import useServices from "@/services";
+import Services from "@/services";
 import { InUsers } from "@/services/apiServices/Users/Models";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 const useCriarUsuario = () => {
-  const { users: services } = useServices();
+  const { users: services } = Services();
   const { handleResetForm } = useStepFormContext();
 
   const {

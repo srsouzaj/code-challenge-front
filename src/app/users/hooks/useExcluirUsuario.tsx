@@ -1,10 +1,10 @@
 "use client";
-import useServices from "@/services";
+import Services from "@/services";
 import { QueryClient, useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 const useExcluirUsuario = () => {
-  const { users: services } = useServices();
+  const { users: services } = Services();
   const queryClient = new QueryClient();
 
   const {

@@ -1,12 +1,12 @@
 "use client";
 
-import useServices from "@/services";
+import Services from "@/services";
 import { OutUsers } from "@/services/apiServices/Users/Models";
 
 import { useQuery } from "@tanstack/react-query";
 
 const useConsultarUsuarios = () => {
-  const { users: services } = useServices();
+  const { users: services } = Services();
 
   const { data, isLoading: loadingUsers } = useQuery({
     queryKey: ["consultar-usuario"],

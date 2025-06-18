@@ -1,9 +1,9 @@
-import useServices from "@/services";
+import Services from "@/services";
 import { OutAddress } from "@/services/apiServices/Address/Models";
 import { useQuery } from "@tanstack/react-query";
 
 const useConsultarCEP = (cep: string) => {
-  const { address: services } = useServices();
+  const { address: services } = Services();
 
   const isValidCep = /^[0-9]{8}$/.test(cep.replace("-", ""));
 

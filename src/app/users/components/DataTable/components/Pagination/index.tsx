@@ -1,9 +1,9 @@
-import { useUsersContext } from "@/app/users/context/users.context";
+import { useUsersStore } from "@/app/users/store/user.store";
 import { Button } from "@/components/ui/button";
 import { memo } from "react";
 
 const Pagination = () => {
-  const { currentPage, goToPage, totalPages } = useUsersContext();
+  const { currentPage, goToPage, totalPages } = useUsersStore();
   return (
     <div className="flex justify-end items-center gap-4 p-4">
       <span className="text-sm text-muted-foreground">

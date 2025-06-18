@@ -8,10 +8,10 @@ import {
 import { MoreVertical, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AlertDeleteUsers from "../../../AlertDeleteUsers";
-import { useUsersContext } from "@/app/users/context/users.context";
+import { useUsersStore } from "@/app/users/store/user.store";
 
 const ActionsTable = ({ userId }: { userId: number }) => {
-  const { handleDeleteUser } = useUsersContext();
+  const { handleDeleteUser } = useUsersStore();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

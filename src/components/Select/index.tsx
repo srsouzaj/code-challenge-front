@@ -11,11 +11,11 @@ import {
 } from "@/components/ui/select";
 
 import { Label } from "@/components/ui/label";
-import { OutAddressFormTypes } from "@/app/register/components/Form/Steps/AddressForm/utils/address.interface";
+import { OutAddressFormTypes } from "@/components/Form/Steps/AddressForm/utils/address.interface";
 import {
   BrazilianStates,
   Option,
-} from "@/app/register/components/Form/Steps/AddressForm/utils/state";
+} from "@/components/Form/Steps/AddressForm/utils/state";
 
 interface FormSelectProps {
   name: keyof OutAddressFormTypes;

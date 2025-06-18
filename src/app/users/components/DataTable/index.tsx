@@ -1,6 +1,6 @@
 "use client";
 
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -10,16 +10,28 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { useUsersContext } from "../../context/users.context";
-
 import ActionsTable from "./components/ActionsTable";
 import Pagination from "./components/Pagination";
 import FilterInput from "./components/FilterInput";
 import ExportForDownload from "./components/ExportForDownload";
 import ModalUsers from "../ModalUsers";
+import { useUsersStore } from "../../store/user.store";
+import useConsultarUsuarios from "../../hooks/useConsultarUsuario";
 
 const DataTable = () => {
-  const { currentUsers } = useUsersContext();
+  const { currentUsers, setUsers, users } = useUsersStore();
+
+  const { users: fetchedUsers } = useConsultarUsuarios();
+
+  useEffect(() => {
+    const areSame =
+      users.length === fetchedUsers.length &&
+      users.every((u, i) => u.id === fetchedUsers[i].id);
+
+    if (!areSame) {
+      setUsers(fetchedUsers);
+    }
+  }, [fetchedUsers, users, setUsers]);
 
   return (
     <div className="w-full space-y-4">
@@ -34,10 +46,9 @@ const DataTable = () => {
             <TableRow>
               <TableHead>Nome</TableHead>
               <TableHead>Email</TableHead>
-              <TableHead>Telefone</TableHead>
               <TableHead>Estado</TableHead>
               <TableHead>Criado em</TableHead>
-              <TableHead className="text-right">Ações</TableHead>
+              <TableHead>Ações</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -48,12 +59,11 @@ const DataTable = () => {
                     <ModalUsers user={user} />
                   </TableCell>
                   <TableCell>{user.email}</TableCell>
-                  <TableCell>{user.phone}</TableCell>
                   <TableCell>{user.state}</TableCell>
                   <TableCell>
                     {new Date(user.createdAt).toLocaleDateString("pt-BR")}
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell>
                     <ActionsTable userId={user.id} />
                   </TableCell>
                 </TableRow>
