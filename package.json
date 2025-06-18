@@ -7,7 +7,7 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "test": "echo \"Testes não configurados.\" && exit 0",
+        "test": "vitest",
         "commitlint": "commitlint --edit",
         "prepare": "husky",
         "commit": "git add . && cz"
