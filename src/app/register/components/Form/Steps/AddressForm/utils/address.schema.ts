@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { validStates } from "./state";
+import { validStates, BrazilianStates } from "./state";
 
-function tupleToEnum<T extends readonly [string, ...string[]]>(arr: T) {
-  return arr;
-}
-
-const validStatesTuple = tupleToEnum(validStates);
+// converter array para tuple do Zod (que espera tupla)
+const validStatesTuple = validStates as unknown as readonly [
+  BrazilianStates,
+  ...BrazilianStates[]
+];
 
 const outAddressFormSchema = z.object({
   cep: z

@@ -8,12 +8,14 @@ interface ButtonNavigationProps {
   onSubmit: (data: any) => void;
   handleBack: () => void;
   children?: ReactNode;
+  isLoading?: boolean;
 }
 
 const ButtonNavigation: React.FC<ButtonNavigationProps> = ({
   onSubmit,
   handleBack,
   children,
+  isLoading = false,
 }) => {
   const { step } = useStepFormContext();
   const {
@@ -30,7 +32,7 @@ const ButtonNavigation: React.FC<ButtonNavigationProps> = ({
           onClick={handleBack}
           size="sm"
           variant={"outline"}
-          className="font-medium"
+          className="font-medium cursor-pointer"
           disabled={step === 0}
         >
           Voltar
@@ -39,8 +41,8 @@ const ButtonNavigation: React.FC<ButtonNavigationProps> = ({
           type="submit"
           size="sm"
           disabled={!isValid || isSubmitting}
-          className="font-medium"
-          isLoading={isSubmitting}
+          className="font-medium cursor-pointer"
+          isLoading={isLoading}
         >
           {step === (2 as number) ? "Finalizar" : "Próximo"}
         </Button>

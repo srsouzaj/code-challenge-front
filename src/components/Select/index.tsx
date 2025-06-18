@@ -12,18 +12,17 @@ import {
 
 import { Label } from "@/components/ui/label";
 import { OutAddressFormTypes } from "@/app/register/components/Form/Steps/AddressForm/utils/address.interface";
-
-interface Option {
-  label: string;
-  value: string;
-}
+import {
+  BrazilianStates,
+  Option,
+} from "@/app/register/components/Form/Steps/AddressForm/utils/state";
 
 interface FormSelectProps {
   name: keyof OutAddressFormTypes;
   control: Control<OutAddressFormTypes>;
   label: string;
   options: Option[];
-  placeholder: string;
+  placeholder?: string;
 }
 
 const Select = ({
@@ -34,13 +33,16 @@ const Select = ({
   placeholder,
 }: FormSelectProps) => {
   return (
-    <div className={`flex flex-col gap-1`}>
+    <div className="flex flex-col gap-1">
       <Label htmlFor={name}>{label}</Label>
       <Controller
         name={name}
         control={control}
         render={({ field }) => (
-          <SelectRoot onValueChange={field.onChange} value={field.value}>
+          <SelectRoot
+            onValueChange={(value) => field.onChange(value as BrazilianStates)}
+            value={field.value as BrazilianStates}
+          >
             <SelectTrigger className="w-full">
               <SelectValue placeholder={placeholder} />
             </SelectTrigger>

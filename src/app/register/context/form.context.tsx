@@ -17,6 +17,7 @@ interface FormContextValue {
   handleAddressData: (value: OutAddressFormTypes) => void;
   personalData: OutPersonalFormTypes;
   addressData: OutAddressFormTypes;
+  handleResetForm: () => void;
 }
 
 const FormContext = createContext<FormContextValue>({} as FormContextValue);
@@ -51,6 +52,13 @@ export const FormProvider: React.FC<React.PropsWithChildren> = ({
     setStep((prevStep) => prevStep + 1);
   }, []);
 
+  const handleResetForm = useCallback(() => {
+    console.log("bateu aqui");
+    setStep(0);
+    setPersonalData({} as OutPersonalFormTypes);
+    setAddressData({} as OutAddressFormTypes);
+  }, []);
+
   const value: FormContextValue = useMemo(
     () => ({
       handleBack,
@@ -61,6 +69,7 @@ export const FormProvider: React.FC<React.PropsWithChildren> = ({
       handleAddressData,
       handlePersonalData,
       personalData,
+      handleResetForm,
     }),
     [
       handleBack,
@@ -71,6 +80,7 @@ export const FormProvider: React.FC<React.PropsWithChildren> = ({
       handleAddressData,
       handlePersonalData,
       personalData,
+      handleResetForm,
     ]
   );
 

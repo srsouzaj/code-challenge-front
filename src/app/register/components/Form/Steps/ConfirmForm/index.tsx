@@ -14,7 +14,7 @@ import { InUsers } from "@/services/apiServices/Users/Models";
 
 const ConfirmForm = () => {
   const { handleBack, personalData, addressData } = useStepFormContext();
-  const { criarUsuarios } = useCriarUsuario();
+  const { criarUsuarios, loadingCriarUsuarios, isSuccess } = useCriarUsuario();
   const method = useForm<OutConfirmFormTypes>({
     resolver: zodResolver(outConfirmFormSchema),
     defaultValues: {
@@ -22,29 +22,48 @@ const ConfirmForm = () => {
     },
   });
 
+  console.log(isSuccess);
+
   const {
     control,
     formState: { errors },
   } = method;
 
-  const onSubmit = useCallback(({ acceptTerms }: OutConfirmFormTypes) => {
-    const data: InUsers = {
-      full_name: personalData.full_name,
-      email: personalData.email,
-      phone: personalData.phone,
-      zip_code: addressData.cep,
-      address: addressData.address,
-      number: addressData.number,
-      city: addressData.city,
-      state: addressData.state,
-      terms_accepted: acceptTerms,
-    };
-    criarUsuarios(data);
-  }, []);
+  const onSubmit = useCallback(
+    ({ acceptTerms }: OutConfirmFormTypes) => {
+      const data: InUsers = {
+        full_name: personalData.full_name,
+        email: personalData.email,
+        phone: personalData.phone,
+        zip_code: addressData.cep,
+        address: addressData.address,
+        number: addressData.number,
+        city: addressData.city,
+        state: addressData.state,
+        terms_accepted: acceptTerms,
+      };
+      criarUsuarios(data);
+    },
+    [
+      addressData.address,
+      addressData.cep,
+      addressData.city,
+      addressData.number,
+      addressData.state,
+      criarUsuarios,
+      personalData.email,
+      personalData.full_name,
+      personalData.phone,
+    ]
+  );
 
   return (
     <FormProvider {...method}>
-      <ButtonNavigation handleBack={handleBack} onSubmit={onSubmit}>
+      <ButtonNavigation
+        handleBack={handleBack}
+        isLoading={loadingCriarUsuarios}
+        onSubmit={onSubmit}
+      >
         <aside className="flex flex-col gap-1">
           <p className="font-semibold text-primary text-xl">Dados Pessoais:</p>
           <span className="font-normal text-sm">

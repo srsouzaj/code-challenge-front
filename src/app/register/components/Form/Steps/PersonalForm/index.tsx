@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useEffect, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -15,8 +15,14 @@ import useFormatterPersonalForm from "./hooks/useFormatterPersonalForm";
 
 const PersonalForm = () => {
   const { formatName, formatPhone, formatEmail } = useFormatter();
-  const { handleBack, handleNext, handlePersonalData } = useStepFormContext();
-  const { defaultValues } = useFormatterPersonalForm();
+  const { handleBack, handleNext, handlePersonalData, personalData } =
+    useStepFormContext();
+  const { transformInitialValues } = useFormatterPersonalForm();
+
+  const defaultValues: OutPersonalFormTypes = useMemo(
+    () => transformInitialValues(personalData),
+    [personalData]
+  );
 
   const method = useForm<OutPersonalFormTypes>({
     resolver: zodResolver(outPersonalFormSchema),
@@ -25,8 +31,13 @@ const PersonalForm = () => {
 
   const {
     register,
+    reset,
     formState: { errors },
   } = method;
+
+  useEffect(() => {
+    reset(transformInitialValues(personalData));
+  }, [reset, personalData]);
 
   const onSubmit = (data: OutPersonalFormTypes) => {
     handlePersonalData(data);

@@ -2,12 +2,11 @@
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { memo, useEffect } from "react";
+import { memo, useEffect, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import ErrorMessage from "@/components/ErrorMessage";
 import { OutAddressFormTypes } from "./utils/address.interface";
 import { zodResolver } from "@hookform/resolvers/zod";
-import outAddressFormSchema from "./utils/address.schema";
 import Select from "@/components/Select";
 import statesOptions from "./utils/state";
 import useConsultarCEP from "./hooks/useConsultarCep";
@@ -15,11 +14,20 @@ import useFormatterAddressForm from "./hooks/useFormatterAddressForm";
 import { useFormatter } from "@/hooks/useFormatter";
 import ButtonNavigation from "../buttonNavigation";
 import { useStepFormContext } from "@/app/register/context/form.context";
+import { toast } from "sonner";
+import outAddressFormSchema from "./utils/address.schema";
 
 const AddressForm = () => {
-  const { changeValuesforNewCEP, defaultValues } = useFormatterAddressForm();
-  const { handleNext, handleBack, handleAddressData } = useStepFormContext();
+  const { changeValuesforNewCEP, transformInitialValues } =
+    useFormatterAddressForm();
+
+  const { handleNext, handleBack, handleAddressData, addressData } =
+    useStepFormContext();
   const { formatCEP } = useFormatter();
+  const defaultValues: OutAddressFormTypes = useMemo(
+    () => transformInitialValues(addressData),
+    [addressData, transformInitialValues]
+  );
 
   const method = useForm<OutAddressFormTypes>({
     resolver: zodResolver(outAddressFormSchema),
@@ -35,13 +43,27 @@ const AddressForm = () => {
 
   const cep = watch("cep");
 
-  const { address } = useConsultarCEP(cep);
+  const { address, message } = useConsultarCEP(cep);
 
   useEffect(() => {
     if (address && address.logradouro) {
-      reset(changeValuesforNewCEP({ add: address }));
+      reset(
+        changeValuesforNewCEP({ add: address, number: addressData.number })
+      );
     }
-  }, [address, reset]);
+  }, [address, reset, addressData.number]);
+
+  useEffect(() => {
+    reset(transformInitialValues(addressData));
+  }, [reset, addressData]);
+
+  useEffect(() => {
+    if (message)
+      toast(message, {
+        description:
+          " Caso esteja preenchido corretamente, será necessário o inserí-los manualmente.",
+      });
+  }, [message]);
 
   const onSubmitAddress = (data: OutAddressFormTypes) => {
     handleAddressData(data);
@@ -97,11 +119,11 @@ const AddressForm = () => {
           <div className="flex w-full gap-2">
             <div>
               <Select
-                placeholder="Selecione o estado"
                 name="state"
                 control={control}
                 label="Estado"
                 options={statesOptions}
+                placeholder="Selecione o estado"
               />
               <ErrorMessage message={errors.state?.message} />
             </div>
