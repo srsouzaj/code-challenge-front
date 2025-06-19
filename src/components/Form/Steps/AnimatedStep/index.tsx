@@ -24,7 +24,8 @@ const AnimatedStep = ({ active, children }: AnimatedStepProps) => {
       aria-hidden={!active}
       ref={ref}
       style={{
-        height,
+        minHeight: height,
+
         overflow: "hidden",
         transition: "height 0.7s ease",
         opacity: active ? 1 : 0,

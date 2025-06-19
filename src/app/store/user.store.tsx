@@ -1,6 +1,11 @@
 import { OutUsers } from "@/services/apiServices/Users/Models";
 import { create } from "zustand";
 
+interface SortConfig {
+  key: keyof OutUsers;
+  direction: "asc" | "desc";
+}
+
 interface UsersState {
   users: OutUsers[];
   searchTerm: string;
@@ -9,6 +14,7 @@ interface UsersState {
   totalPages: number;
   itemsPerPage: number;
   currentUsers: OutUsers[];
+  sortConfig: SortConfig | null;
 
   setUsers: (users: OutUsers[]) => void;
   updateSearchTerm: (term: string) => void;
@@ -16,6 +22,7 @@ interface UsersState {
   handleFilter: () => void;
   handleResetFilter: () => void;
   handleDeleteUser: (userId: number) => void;
+  handleSort: (key: keyof OutUsers) => void;
 }
 
 export const useUsersStore = create<UsersState>((set) => ({
@@ -26,15 +33,21 @@ export const useUsersStore = create<UsersState>((set) => ({
   itemsPerPage: 5,
   totalPages: 1,
   currentUsers: [],
+  sortConfig: null,
 
   setUsers: (users) =>
     set((state) => {
+      const totalPages = Math.max(
+        1,
+        Math.ceil(users.length / state.itemsPerPage)
+      );
+      const currentUsers = users.slice(0, state.itemsPerPage);
       return {
         users,
         filteredUsers: users,
-        totalPages: Math.max(1, Math.ceil(users.length / state.itemsPerPage)),
+        totalPages,
         currentPage: 1,
-        currentUsers: users.slice(0, state.itemsPerPage),
+        currentUsers,
       };
     }),
 
@@ -130,6 +143,17 @@ export const useUsersStore = create<UsersState>((set) => ({
         totalPages: newTotalPages,
         currentPage: newCurrentPage,
         currentUsers: newCurrentUsers,
+      };
+    }),
+
+  handleSort: (key) =>
+    set((state) => {
+      const newDirection =
+        state.sortConfig?.key === key && state.sortConfig.direction === "asc"
+          ? "desc"
+          : "asc";
+      return {
+        sortConfig: { key, direction: newDirection },
       };
     }),
 }));

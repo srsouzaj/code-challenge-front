@@ -1,6 +1,6 @@
 "use client";
 
-import React, { memo, useEffect } from "react";
+import React, { memo, useEffect, useMemo } from "react";
 import {
   Table,
   TableBody,
@@ -17,12 +17,32 @@ import ExportForDownload from "./components/ExportForDownload";
 import ModalUsers from "../ModalUsers";
 import { useUsersStore } from "../../../store/user.store";
 import useConsultarUsuarios from "../../hooks/useConsultarUsuario";
+import { OutUsers } from "@/services/apiServices/Users/Models";
+import { Button } from "@/components/ui/button";
+import { ArrowUpDown } from "lucide-react";
 
 const DataTable = () => {
-  const { currentUsers, setUsers, users } = useUsersStore();
-
   const { users: fetchedUsers } = useConsultarUsuarios();
-  console.log(users);
+  const { currentUsers, sortConfig, handleSort, setUsers } = useUsersStore();
+
+  const sortedUsers: OutUsers[] = useMemo(() => {
+    if (!sortConfig) return currentUsers;
+
+    return [...currentUsers].sort((a, b) => {
+      const aValue = a[sortConfig.key];
+      const bValue = b[sortConfig.key];
+
+      if (typeof aValue === "string") {
+        return sortConfig.direction === "asc"
+          ? aValue.localeCompare(String(bValue))
+          : String(bValue).localeCompare(aValue);
+      }
+
+      return sortConfig.direction === "asc"
+        ? Number(aValue) - Number(bValue)
+        : Number(bValue) - Number(aValue);
+    });
+  }, [currentUsers, sortConfig]);
 
   useEffect(() => {
     if (fetchedUsers.length > 0) {
@@ -40,17 +60,37 @@ const DataTable = () => {
       <div className="border rounded-md">
         <Table>
           <TableHeader>
-            <TableRow>
-              <TableHead>Nome</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Estado</TableHead>
-              <TableHead>Criado em</TableHead>
+            <TableRow className="hover:bg-muted bg-muted">
+              <TableHead>
+                Nome
+                <Button variant="ghost" onClick={() => handleSort("full_name")}>
+                  <ArrowUpDown />
+                </Button>
+              </TableHead>
+              <TableHead>
+                Email
+                <Button variant="ghost" onClick={() => handleSort("email")}>
+                  <ArrowUpDown />
+                </Button>
+              </TableHead>
+              <TableHead>
+                Estado
+                <Button variant="ghost" onClick={() => handleSort("state")}>
+                  <ArrowUpDown />
+                </Button>
+              </TableHead>
+              <TableHead>
+                Criado em
+                <Button variant="ghost" onClick={() => handleSort("createdAt")}>
+                  <ArrowUpDown />
+                </Button>
+              </TableHead>
               <TableHead>Ações</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {currentUsers.length > 0 ? (
-              currentUsers.map((user) => (
+            {sortedUsers.length > 0 ? (
+              sortedUsers.map((user) => (
                 <TableRow key={user.id}>
                   <TableCell>
                     <ModalUsers user={user} />
