@@ -1,4 +1,4 @@
-import { useUsersStore } from "@/app/users/store/user.store";
+import { useUsersStore } from "@/app/store/user.store";
 import { Button } from "@/components/ui/button";
 import { memo } from "react";
 

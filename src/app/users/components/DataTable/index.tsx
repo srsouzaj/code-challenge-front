@@ -15,23 +15,20 @@ import Pagination from "./components/Pagination";
 import FilterInput from "./components/FilterInput";
 import ExportForDownload from "./components/ExportForDownload";
 import ModalUsers from "../ModalUsers";
-import { useUsersStore } from "../../store/user.store";
+import { useUsersStore } from "../../../store/user.store";
 import useConsultarUsuarios from "../../hooks/useConsultarUsuario";
 
 const DataTable = () => {
   const { currentUsers, setUsers, users } = useUsersStore();
 
   const { users: fetchedUsers } = useConsultarUsuarios();
+  console.log(users);
 
   useEffect(() => {
-    const areSame =
-      users.length === fetchedUsers.length &&
-      users.every((u, i) => u.id === fetchedUsers[i].id);
-
-    if (!areSame) {
+    if (fetchedUsers.length > 0) {
       setUsers(fetchedUsers);
     }
-  }, [fetchedUsers, users, setUsers]);
+  }, [fetchedUsers]);
 
   return (
     <div className="w-full space-y-4">

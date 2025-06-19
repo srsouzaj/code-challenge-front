@@ -12,21 +12,23 @@ import { Trash2 } from "lucide-react";
 import { useState, useCallback } from "react";
 import useExcluirUsuario from "../../hooks/useExcluirUsuario";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { useUsersStore } from "@/app/store/user.store";
 
 interface AlertDeleteUsers {
   userId: number;
-  handleDeleteUser: (userId: number) => void;
 }
 
-const AlertDeleteUsers = ({ userId, handleDeleteUser }: AlertDeleteUsers) => {
+const AlertDeleteUsers = ({ userId }: AlertDeleteUsers) => {
   const { excluirUsuario } = useExcluirUsuario();
+  const { handleDeleteUser } = useUsersStore();
   const [open, setOpen] = useState(false);
 
   const onSubmit = useCallback(() => {
-    handleDeleteUser(userId);
     excluirUsuario(userId);
+
+    handleDeleteUser(userId);
     setOpen(false);
-  }, [excluirUsuario, handleDeleteUser, userId]);
+  }, [excluirUsuario, userId]);
 
   return (
     <>

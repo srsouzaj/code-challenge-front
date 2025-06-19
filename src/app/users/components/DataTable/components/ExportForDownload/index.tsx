@@ -8,7 +8,7 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { useUsersStore } from "@/app/users/store/user.store";
+import { useUsersStore } from "@/app/store/user.store";
 
 const ExportForDownload = () => {
   const { exportCSV, exportJSON } = useExportData();

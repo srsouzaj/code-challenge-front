@@ -11,8 +11,9 @@ import {
 } from "@/components/ui/card";
 import { FormStep, stepLabels } from "./Steps/utils/descriptions";
 import FormSteps from "./Steps/AnimatedStep/utils/FormStep";
-import { useFormStore } from "@/app/register/stores/form.store";
+
 import { OutUsers } from "@/services/apiServices/Users/Models";
+import { useFormStore } from "@/app/store/form.store";
 
 const FormContainer = ({ user }: { user?: OutUsers }) => {
   const { step, totalSteps, handleGetInfoForEdit, isEdit } = useFormStore();
@@ -29,7 +30,7 @@ const FormContainer = ({ user }: { user?: OutUsers }) => {
       <Card className="shadow-sm">
         <CardHeader>
           <CardTitle className="text-2xl text-primary">
-            Etapa {step + 1} de {totalSteps} - {isEdit ? "Edição" : "Criação"}
+            Etapa {step + 1} de {totalSteps} - {isEdit ? "Edição" : "Criação"}{" "}
             de usuário(s)
           </CardTitle>
           <CardDescription>

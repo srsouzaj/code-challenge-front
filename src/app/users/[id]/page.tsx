@@ -7,8 +7,6 @@ export default async function EditPage({ params }: { params: { id: string } }) {
 
   const user = await users.consultarUsuarioById(Number(id));
 
-  console.log(user);
-
   return (
     <main className="container">
       <h1 className="text-xl font-bold mb-4">Usuário:</h1>

@@ -1,4 +1,5 @@
 "use client";
+
 import { memo, useEffect, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,7 +13,7 @@ import outPersonalFormSchema from "./utils/personalForm.schema";
 import { useFormatter } from "@/hooks/useFormatter";
 import ButtonNavigation from "../buttonNavigation";
 import useFormatterPersonalForm from "./hooks/useFormatterPersonalForm";
-import { useFormStore } from "@/app/register/stores/form.store";
+import { useFormStore } from "@/app/store/form.store";
 
 const PersonalForm = () => {
   const { formatName, formatPhone, formatEmail } = useFormatter();
@@ -25,7 +26,7 @@ const PersonalForm = () => {
     [personalData]
   );
 
-  const method = useForm<OutPersonalFormTypes>({
+  const methods = useForm<OutPersonalFormTypes>({
     resolver: zodResolver(outPersonalFormSchema),
     defaultValues,
   });
@@ -34,7 +35,7 @@ const PersonalForm = () => {
     register,
     reset,
     formState: { errors },
-  } = method;
+  } = methods;
 
   useEffect(() => {
     reset(transformInitialValues(personalData));
@@ -46,14 +47,20 @@ const PersonalForm = () => {
   };
 
   return (
-    <FormProvider {...method}>
+    <FormProvider {...methods}>
       <ButtonNavigation handleBack={handleBack} onSubmit={onSubmit}>
-        <fieldset className="flex flex-col gap-6" aria-label="Dados Pessoais">
+        <fieldset
+          role="group"
+          aria-label="Dados Pessoais"
+          className="flex flex-col gap-6"
+        >
           <div className="flex flex-col gap-1">
             <Label htmlFor="full_name">Nome Completo</Label>
             <Input
               id="full_name"
               placeholder="Digite seu nome"
+              aria-invalid={!!errors.full_name}
+              aria-describedby="error-full_name"
               {...register("full_name", {
                 onChange: (e) => {
                   e.target.value = formatName(e.target.value);
@@ -61,7 +68,10 @@ const PersonalForm = () => {
               })}
               autoComplete="off"
             />
-            <ErrorMessage message={errors.full_name?.message} />
+            <ErrorMessage
+              message={errors.full_name?.message}
+              id="error-full_name"
+            />
           </div>
 
           <div className="flex flex-col gap-1">
@@ -70,6 +80,8 @@ const PersonalForm = () => {
               id="email"
               type="email"
               placeholder="Digite seu melhor e-mail"
+              aria-invalid={!!errors.email}
+              aria-describedby="error-email"
               {...register("email", {
                 onChange: (e) => {
                   e.target.value = formatEmail(e.target.value);
@@ -78,7 +90,7 @@ const PersonalForm = () => {
               autoComplete="off"
               autoCapitalize="off"
             />
-            <ErrorMessage message={errors.email?.message} />
+            <ErrorMessage message={errors.email?.message} id="error-email" />
           </div>
 
           <div className="flex flex-col gap-1">
@@ -87,6 +99,8 @@ const PersonalForm = () => {
               id="phone"
               type="tel"
               placeholder="Digite seu telefone"
+              aria-invalid={!!errors.phone}
+              aria-describedby="error-phone"
               {...register("phone", {
                 onChange: (e) => {
                   e.target.value = formatPhone(e.target.value);
@@ -94,7 +108,7 @@ const PersonalForm = () => {
               })}
               autoComplete="off"
             />
-            <ErrorMessage message={errors.phone?.message} />
+            <ErrorMessage message={errors.phone?.message} id="error-phone" />
           </div>
         </fieldset>
       </ButtonNavigation>
