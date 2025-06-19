@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const pathname = usePathname();
-  const title = pathname === "/users" ? "Usuários" : "Cadastro";
+  const title = pathname === "/users" ? "Usuário" : "Cadastro";
   return (
     <header
       aria-label="Barra de navegação principal"
