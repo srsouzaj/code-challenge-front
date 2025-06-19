@@ -24,6 +24,7 @@ const ConfirmForm = () => {
     defaultValues: {
       acceptTerms: false,
     },
+    mode: "onChange",
   });
 
   const {

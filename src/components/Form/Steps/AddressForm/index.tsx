@@ -36,6 +36,7 @@ const AddressForm = () => {
   const methods = useForm<OutAddressFormTypes>({
     resolver: zodResolver(outAddressFormSchema),
     defaultValues,
+    mode: "onChange",
   });
 
   const {

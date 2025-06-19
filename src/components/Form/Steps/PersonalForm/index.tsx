@@ -29,6 +29,7 @@ const PersonalForm = () => {
   const methods = useForm<OutPersonalFormTypes>({
     resolver: zodResolver(outPersonalFormSchema),
     defaultValues,
+    mode: "onChange",
   });
 
   const {
