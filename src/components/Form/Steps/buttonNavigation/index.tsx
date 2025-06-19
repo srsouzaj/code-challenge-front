@@ -1,6 +1,8 @@
-import { useFormStore } from "@/app/register/stores/form.store";
+"use client";
+
+import { useFormStore } from "@/app/store/form.store";
 import { Button } from "@/components/ui/button";
-import { memo, ReactNode } from "react";
+import React, { memo, ReactNode } from "react";
 import { useFormContext } from "react-hook-form";
 
 interface ButtonNavigationProps {
@@ -24,16 +26,25 @@ const ButtonNavigation: React.FC<ButtonNavigationProps> = ({
   } = useFormContext();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col gap-4"
+      aria-live="polite"
+      aria-label="Formulário de navegação"
+    >
       {children}
-      <div className="flex justify-between">
+      <nav
+        aria-label="Navegação do formulário"
+        className="flex justify-between"
+      >
         <Button
           type="button"
           onClick={handleBack}
           size="sm"
-          variant={"outline"}
+          variant="outline"
           className="font-medium cursor-pointer"
           disabled={step === 0}
+          aria-disabled={step === 0}
         >
           Voltar
         </Button>
@@ -43,10 +54,11 @@ const ButtonNavigation: React.FC<ButtonNavigationProps> = ({
           disabled={!isValid || isSubmitting}
           className="font-medium cursor-pointer"
           isLoading={isLoading}
+          aria-disabled={!isValid || isSubmitting}
         >
-          {step === (2 as number) ? "Finalizar" : "Próximo"}
+          {step === 2 ? "Finalizar" : "Próximo"}
         </Button>
-      </div>
+      </nav>
     </form>
   );
 };

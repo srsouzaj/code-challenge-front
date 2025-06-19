@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useRef, useEffect, useState } from "react";
 
 interface AnimatedStepProps {
   active: boolean;
@@ -6,19 +6,36 @@ interface AnimatedStepProps {
 }
 
 const AnimatedStep = ({ active, children }: AnimatedStepProps) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [height, setHeight] = useState<string>("0px");
+
+  useEffect(() => {
+    if (ref.current) {
+      if (active) {
+        setHeight(`${ref.current.scrollHeight}px`);
+      } else {
+        setHeight("0px");
+      }
+    }
+  }, [active]);
+
   return (
     <div
       aria-hidden={!active}
-      className={`
-          overflow-hidden
-          transition-[opacity,transform,max-height] duration-700
-          ${
-            active
-              ? "opacity-100 translate-x-0 max-h-[1000px] scale-100 ease-out"
-              : "opacity-0 -translate-x-5 max-h-0 scale-95 pointer-events-none ease-in"
-          }
-        `}
-      style={{ willChange: "opacity, transform, max-height" }}
+      ref={ref}
+      style={{
+        height,
+        overflow: "hidden",
+        transition: "height 0.7s ease",
+        opacity: active ? 1 : 0,
+        transform: active
+          ? "translateX(0) scale(1)"
+          : "translateX(-20px) scale(0.95)",
+        transitionProperty: "height, opacity, transform",
+        transitionDuration: "0.7s",
+        transitionTimingFunction: "ease",
+        pointerEvents: active ? "auto" : "none",
+      }}
     >
       {children}
     </div>

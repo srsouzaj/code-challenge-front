@@ -8,10 +8,10 @@ import {
 import { MoreVertical, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AlertDeleteUsers from "../../../AlertDeleteUsers";
-import { useUsersStore } from "@/app/users/store/user.store";
+import { useRouter } from "next/navigation";
 
 const ActionsTable = ({ userId }: { userId: number }) => {
-  const { handleDeleteUser } = useUsersStore();
+  const router = useRouter();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -21,14 +21,14 @@ const ActionsTable = ({ userId }: { userId: number }) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem
-          onClick={() => console.log("Editar", userId)}
+          onClick={() => router.push(`/users/${userId}`)}
           className="flex items-center gap-2"
         >
           <Pencil className="w-4 h-4" />
           Editar
         </DropdownMenuItem>
 
-        <AlertDeleteUsers handleDeleteUser={handleDeleteUser} userId={userId} />
+        <AlertDeleteUsers userId={userId} />
       </DropdownMenuContent>
     </DropdownMenu>
   );

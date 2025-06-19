@@ -29,13 +29,6 @@ export const useUsersStore = create<UsersState>((set) => ({
 
   setUsers: (users) =>
     set((state) => {
-      if (
-        state.users.length === users.length &&
-        state.users.every((u, i) => u.id === users[i].id)
-      ) {
-        return {};
-      }
-
       return {
         users,
         filteredUsers: users,
@@ -115,24 +108,28 @@ export const useUsersStore = create<UsersState>((set) => ({
 
   handleDeleteUser: (userId) =>
     set((state) => {
-      const filteredUsers = state.filteredUsers.filter(
+      const updatedUsers = state.users.filter((user) => user.id !== userId);
+      const updatedFilteredUsers = state.filteredUsers.filter(
         (user) => user.id !== userId
       );
-      const users = state.users.filter((user) => user.id !== userId);
-      const totalPages = Math.max(
+
+      const newTotalPages = Math.max(
         1,
-        Math.ceil(filteredUsers.length / state.itemsPerPage)
+        Math.ceil(updatedFilteredUsers.length / state.itemsPerPage)
       );
-      const startIndex = (state.currentPage - 1) * state.itemsPerPage;
-      const currentUsers = filteredUsers.slice(
+      const newCurrentPage = Math.min(state.currentPage, newTotalPages);
+      const startIndex = (newCurrentPage - 1) * state.itemsPerPage;
+      const newCurrentUsers = updatedFilteredUsers.slice(
         startIndex,
         startIndex + state.itemsPerPage
       );
+
       return {
-        filteredUsers,
-        users,
-        totalPages,
-        currentUsers,
+        users: updatedUsers,
+        filteredUsers: updatedFilteredUsers,
+        totalPages: newTotalPages,
+        currentPage: newCurrentPage,
+        currentUsers: newCurrentUsers,
       };
     }),
 }));

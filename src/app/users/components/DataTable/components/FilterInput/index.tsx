@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { memo } from "react";
 import { SlidersHorizontal } from "lucide-react";
-import { useUsersStore } from "@/app/users/store/user.store";
+import { useUsersStore } from "@/app/store/user.store";
 
 const FilterInput = () => {
   const { updateSearchTerm, searchTerm, handleFilter, handleResetFilter } =

@@ -1,3 +1,4 @@
+"use client";
 import Services from "@/services";
 import { OutAddress } from "@/services/apiServices/Address/Models";
 import { useQuery } from "@tanstack/react-query";
@@ -12,6 +13,7 @@ const useConsultarCEP = (cep: string) => {
     queryFn: () => services.consultarCEP(cep),
     enabled: isValidCep,
     staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: false,
   });
 
   return {

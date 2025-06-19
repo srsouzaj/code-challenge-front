@@ -10,8 +10,9 @@ import ButtonNavigation from "../buttonNavigation";
 import { Separator } from "@/components/ui/separator";
 import useCriarUsuario from "./hooks/useCriarUsuario";
 import { InUsers } from "@/services/apiServices/Users/Models";
-import { useFormStore } from "@/app/register/stores/form.store";
+
 import useAtualizarUsuario from "./hooks/useAtualizarUsuario";
+import { useFormStore } from "@/app/store/form.store";
 
 const ConfirmForm = () => {
   const { handleBack, personalData, addressData, isEdit, userId } =
