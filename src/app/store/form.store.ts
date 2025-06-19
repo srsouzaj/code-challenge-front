@@ -1,8 +1,9 @@
 import { create } from "zustand";
-import { OutPersonalFormTypes } from "../../../components/Form/Steps/PersonalForm/utils/personalForm.interface";
-import { OutAddressFormTypes } from "../../../components/Form/Steps/AddressForm/utils/address.interface";
+
 import { OutUsers } from "@/services/apiServices/Users/Models";
 import { BrazilianStates } from "@/components/Form/Steps/AddressForm/utils/state";
+import { OutPersonalFormTypes } from "@/components/Form/Steps/PersonalForm/utils/personalForm.interface";
+import { OutAddressFormTypes } from "@/components/Form/Steps/AddressForm/utils/address.interface";
 
 interface FormState {
   step: number;
