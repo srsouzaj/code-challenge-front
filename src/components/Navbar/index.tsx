@@ -15,7 +15,7 @@ const Navbar = () => {
       aria-label="Barra de navegação principal"
       className="lg:py-5 not-lg:py-8 bg-gray-50 shadow-xs"
     >
-      <div className="container flex justify-between not-lg:flex-row-reverse items-center">
+      <div className="container flex justify-between not-xl:flex-row-reverse items-center">
         <div className="flex gap-3.5 items-center">
           <Link href="/" passHref aria-label="Página inicial">
             <Image src={Logo} alt="Logo do site" width={50} height={50} />
@@ -23,7 +23,7 @@ const Navbar = () => {
         </div>
         <div className="flex gap-1 items-center">
           <SidebarTrigger
-            className="lg:hidden"
+            className="xl:hidden"
             aria-label="Abrir menu lateral"
           />
           <h1 tabIndex={0} className="font-bold text-primary text-md">

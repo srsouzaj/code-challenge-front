@@ -7,12 +7,30 @@ interface AnimatedStepProps {
 
 const AnimatedStep = ({ active, children }: AnimatedStepProps) => {
   const ref = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState<string>("0px");
+  const [height, setHeight] = useState("0px");
 
   useEffect(() => {
-    if (ref.current) {
-      if (active) {
-        setHeight(`${ref.current.scrollHeight}px`);
+    const el = ref.current;
+    if (!el) return;
+
+    if (active) {
+      const scrollHeight = el.scrollHeight;
+      setHeight(`${scrollHeight}px`);
+
+      const timeout = setTimeout(() => {
+        setHeight("auto"); // libera crescimento natural depois da animação
+      }, 700); // mesma duração do transition
+
+      return () => clearTimeout(timeout);
+    } else {
+      // se estava em auto, primeiro fixa antes de recolher
+      if (height === "auto") {
+        const currentHeight = `${el.scrollHeight}px`;
+        setHeight(currentHeight);
+
+        requestAnimationFrame(() => {
+          setHeight("0px");
+        });
       } else {
         setHeight("0px");
       }
@@ -21,11 +39,9 @@ const AnimatedStep = ({ active, children }: AnimatedStepProps) => {
 
   return (
     <div
-      aria-hidden={!active}
       ref={ref}
       style={{
-        minHeight: height,
-
+        height,
         overflow: "hidden",
         transition: "height 0.7s ease",
         opacity: active ? 1 : 0,
@@ -37,6 +53,7 @@ const AnimatedStep = ({ active, children }: AnimatedStepProps) => {
         transitionTimingFunction: "ease",
         pointerEvents: active ? "auto" : "none",
       }}
+      aria-hidden={!active}
     >
       {children}
     </div>
