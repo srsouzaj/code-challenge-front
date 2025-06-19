@@ -28,20 +28,6 @@ Trata-se de uma aplicação front-end desenvolvida com Next.js e uma stack moder
 
 ---
 
-## Scripts disponíveis
-
-No terminal, execute os comandos abaixo para trabalhar com o projeto:
-
-- `npm run dev` — Inicia o servidor de desenvolvimento Next.js
-- `npm run build` — Compila a aplicação para produção
-- `npm run start` — Executa a aplicação compilada em modo produção
-- `npm run lint` — Executa o ESLint para verificar problemas no código
-- `npm run test` — Roda os testes com Vitest
-- `npm run commitlint` — Valida mensagens de commit seguindo o padrão convencional
-- `npm run commit` — Gatilho para preparar commit com Commitizen (interface amigável)
-
----
-
 ## Como rodar localmente
 
 ```bash
@@ -58,17 +44,6 @@ npm install
 npm run dev
 ```
 
-## Estrutura do projeto
-
-/components — Componentes React reutilizáveis
-
-/pages — Páginas da aplicação (Next.js routing)
-
-/styles — Arquivos CSS e configurações Tailwind
-
-/tests — Testes unitários e de integração
-
-/utils — Funções utilitárias, validações e constantes
 
 ## Considerações finais
 
