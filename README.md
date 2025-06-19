@@ -2,13 +2,9 @@
 
 Este projeto é uma implementação do desafio proposto pela [Iza Seguros](https://github.com/iza-seguros/code-challenge-front), recriado e aprimorado para fins de aprendizado e demonstração técnica.
 
----
-
 ## Sobre o Projeto
 
 Trata-se de uma aplicação front-end desenvolvida com Next.js e uma stack moderna focada em produtividade, qualidade e escalabilidade. O objetivo principal é entregar uma interface responsiva, robusta e com boa experiência de usuário, respeitando as especificações do desafio original.
-
----
 
 ## Tecnologias e Ferramentas
 
@@ -22,7 +18,7 @@ Trata-se de uma aplicação front-end desenvolvida com Next.js e uma stack moder
 - **Radix UI** — Componentes acessíveis e headless (alert-dialog, avatar, checkbox, etc)
 - **TanStack Query 5** — Gerenciamento de estado assíncrono e cache de dados
 - **Axios** — Cliente HTTP para comunicação com APIs
-- **Zustand** — Gerenciamento de estado simples e eficiente
+- **Zustand** — Gerenciamento de estado global simples e eficiente
 - **Vitest** — Testes unitários e integração
 - **Commitizen + Husky + Commitlint** — Padronização de commits e automações git
 
@@ -44,10 +40,13 @@ npm install
 npm run dev
 ```
 
+## 🧪 Teste de Responsividade
+
+Recomenda-se o uso da ferramenta [Responsively App](http://responsively.app/download) para verificar o comportamento do layout em múltiplas resoluções de tela. Essa etapa é fundamental para garantir uma experiência consistente em diferentes dispositivos.
 
 ## Considerações finais
 
-Este projeto serve como um exemplo prático de como entregar soluções front-end modernas, testáveis e escaláveis em desafios técnicos reais. O uso de ferramentas como Vitest, Zod, ShadcnUI e Radix UI demonstra atenção a qualidade, experiência do usuário e boas práticas.
+Durante o desenvolvimento, identifiquei alguns pontos de atenção na API que podem impactar o uso, bloqueando requisições no ambiente local. Todavia, para contornar esta situação, esse desenvolvedor criou, do total zero e durante o prazo, uma api nos mesmos moldes da primeira, para continuação do desenvolvimento.
 
 ## Referências
 
@@ -58,5 +57,3 @@ Repositório original do desafio: iza-seguros/code-challenge-front
 Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](hhttps://github.com/srsouzaj/code-challenge-front/edit/main/LICENSE) para mais detalhes.
 
 Feito por Jorge de Souza
-
----
