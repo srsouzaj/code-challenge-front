@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar";
 const nunito = Nunito({
   variable: "--font-nunito",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
